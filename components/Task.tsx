@@ -16,6 +16,9 @@ export type TaskProps = {
 };
 
 export const Task = ({id, description, done}: TaskProps) => {
+  const [isFocused, setIsFocused] = useState(false);
+  const [editText, setEditText] = useState('编辑');
+
   const dispatch = useDispatch();
 
   const deleteTask = () => {
@@ -37,7 +40,7 @@ export const Task = ({id, description, done}: TaskProps) => {
   const textDecoration = done ? 'line-through' : 'none';
 
   const completedTask = {
-    backgroundColor: done ? '#a9a9a9' : '#fff',
+    backgroundColor: done ? '#dcdcdc' : '#fff',
     opacity: done ? 0.5 : 1.0,
   };
 
@@ -45,7 +48,7 @@ export const Task = ({id, description, done}: TaskProps) => {
     <View style={[styles.container, completedTask]}>
       <View style={styles.leftItems}>
         <TouchableOpacity style={styles.checkbox} onPress={toggleTask}>
-          {done && <Text style={styles.cross}>X</Text>}
+          {done && <Text style={styles.check}>✓</Text>}
         </TouchableOpacity>
         <TextInput
           ref={textInputRef}
@@ -53,22 +56,40 @@ export const Task = ({id, description, done}: TaskProps) => {
           maxLength={100}
           value={taskDescription}
           onChangeText={setTaskDescription}
+          onFocus={() => {
+            setIsFocused(true);
+            setEditText('完成');
+          }}
+          onBlur={() => {
+            setIsFocused(false);
+            setEditText('编辑');
+          }}
+          onSubmitEditing={() => {
+            if (textInputRef.current) {
+              textInputRef.current.blur();
+            }
+            editTask();
+          }}
         />
       </View>
       <View style={styles.rightItems}>
         <TouchableOpacity
           style={styles.editButton}
           onPress={() => {
-            if (textInputRef.current) {
+            if (textInputRef.current?.isFocused()) {
               textInputRef.current.blur();
+              editTask();
+            } else {
+              textInputRef.current?.focus();
             }
-            editTask();
           }}>
-          <Text>编辑</Text>
+          <Text>{editText}</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.deleteButton} onPress={deleteTask}>
-          <Text>删除</Text>
-        </TouchableOpacity>
+        {!isFocused && (
+          <TouchableOpacity style={styles.deleteButton} onPress={deleteTask}>
+            <Text>删除</Text>
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );
@@ -103,9 +124,8 @@ const styles = StyleSheet.create({
     padding: 5,
     backgroundColor: '#d3d3d3',
   },
-  cross: {
-    fontSize: 15,
-    width: '100%',
+  check: {
+    fontSize: 16,
     textAlign: 'center',
     justifyContent: 'center',
   },
