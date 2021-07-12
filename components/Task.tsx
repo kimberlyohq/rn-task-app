@@ -1,5 +1,11 @@
 import React, {useRef, useState} from 'react';
-import {View, TouchableOpacity, TextInput, StyleSheet} from 'react-native';
+import {
+  View,
+  TouchableOpacity,
+  Text,
+  TextInput,
+  StyleSheet,
+} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {DELETE_TASK, EDIT_TASK, TOGGLE_DONE} from '../redux/actionTypes';
 
@@ -26,19 +32,25 @@ export const Task = ({id, description, done}: TaskProps) => {
 
   const [taskDescription, setTaskDescription] = useState<string>(description);
 
-  const backgroundColor = done ? 'black' : '#d3d3d3';
-
   const textInputRef = useRef<TextInput>(null);
 
+  const textDecoration = done ? 'line-through' : 'none';
+
+  const completedTask = {
+    backgroundColor: done ? '#a9a9a9' : '#fff',
+    opacity: done ? 0.5 : 1.0,
+  };
+
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, completedTask]}>
       <View style={styles.leftItems}>
-        <TouchableOpacity
-          style={[styles.checkbox, {backgroundColor}]}
-          onPress={toggleTask}
-        />
+        <TouchableOpacity style={styles.checkbox} onPress={toggleTask}>
+          {done && <Text style={styles.cross}>X</Text>}
+        </TouchableOpacity>
         <TextInput
           ref={textInputRef}
+          style={[styles.itemText, {textDecorationLine: textDecoration}]}
+          maxLength={100}
           value={taskDescription}
           onChangeText={setTaskDescription}
         />
@@ -51,9 +63,12 @@ export const Task = ({id, description, done}: TaskProps) => {
               textInputRef.current.blur();
             }
             editTask();
-          }}
-        />
-        <TouchableOpacity style={styles.deleteButton} onPress={deleteTask} />
+          }}>
+          <Text>编辑</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.deleteButton} onPress={deleteTask}>
+          <Text>删除</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -61,13 +76,13 @@ export const Task = ({id, description, done}: TaskProps) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
     padding: 15,
     borderRadius: 10,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: 20,
+    opacity: 0.5,
   },
   leftItems: {
     flexDirection: 'row',
@@ -78,27 +93,38 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignItems: 'center',
+    right: 10,
   },
   checkbox: {
     width: 24,
     height: 24,
     borderRadius: 5,
     marginRight: 15,
+    padding: 5,
+    backgroundColor: '#d3d3d3',
+  },
+  cross: {
+    fontSize: 15,
+    width: '100%',
+    textAlign: 'center',
+    justifyContent: 'center',
   },
   itemText: {
-    maxWidth: '80%',
+    maxWidth: '60%',
+    minWidth: '60%',
   },
   editButton: {
-    backgroundColor: '#32a852',
+    borderColor: '#32a852',
     borderRadius: 5,
-    width: 12,
-    height: 12,
+    borderWidth: 1,
+    padding: 5,
     marginRight: 15,
   },
   deleteButton: {
-    backgroundColor: '#a83238',
+    borderColor: '#a83238',
     borderRadius: 5,
-    width: 12,
-    height: 12,
+    borderWidth: 1,
+    padding: 5,
+    marginRight: 15,
   },
 });
