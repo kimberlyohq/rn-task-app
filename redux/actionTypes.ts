@@ -13,12 +13,12 @@ export interface AddTaskAction {
 
 interface DeleteTaskAction {
   type: typeof DELETE_TASK;
-  payload: Task;
+  payload: {id: number};
 }
 
 interface EditTaskAction {
   type: typeof EDIT_TASK;
-  payload: {id: number; description: string};
+  payload: Omit<Task, 'done'>;
 }
 
 interface ToggleDoneAction {
