@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, FlatList, StyleSheet} from 'react-native';
 import {useSelector} from 'react-redux';
-import {TaskState} from '../redux/taskReducer';
+import {TaskState} from '../store/taskReducer';
 import {Task} from './Task';
 
 export const TaskList = () => {

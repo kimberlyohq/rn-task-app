@@ -7,7 +7,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
-import {addTask} from '../redux/actionCreators';
+import {addTask} from '../store/actionCreators';
 
 export const InputBar = () => {
   const dispatch = useDispatch();

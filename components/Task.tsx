@@ -7,7 +7,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
-import {deleteTask, editTask, toggleDone} from '../redux/actionCreators';
+import {deleteTask, editTask, toggleDone} from '../store/actionCreators';
 
 export type TaskProps = {
   id: number;
