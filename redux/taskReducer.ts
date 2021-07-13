@@ -27,9 +27,10 @@ export const TaskReducer = (
 ) => {
   switch (action.type) {
     case ADD_TASK: {
+      const {description} = action.payload;
       const newTask = {
         id: Math.random(),
-        description: action.payload,
+        description,
         done: false,
       };
       return {...state, tasks: [newTask, ...state.tasks]};
