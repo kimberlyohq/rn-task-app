@@ -5,9 +5,9 @@ import {TaskState} from '../store/taskReducer';
 import {Task} from './Task';
 
 export const TaskList = () => {
-  const tasks = useSelector<TaskState, TaskState['tasks']>(
-    state => state.tasks,
-  );
+  const selectTodos = (state: TaskState) => state.tasks;
+
+  const tasks = useSelector(selectTodos);
 
   return (
     <View style={styles.container}>
