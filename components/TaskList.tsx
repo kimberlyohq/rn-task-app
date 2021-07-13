@@ -11,7 +11,11 @@ export const TaskList = () => {
 
   return (
     <View style={styles.container}>
-      <FlatList data={tasks} renderItem={({item}) => <Task {...item} />} />
+      <FlatList
+        data={tasks}
+        renderItem={({item}) => <Task {...item} />}
+        keyExtractor={item => item.id.toString()}
+      />
     </View>
   );
 };
