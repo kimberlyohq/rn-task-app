@@ -8,12 +8,12 @@ export const GET_TASKS = 'GET_TASKS';
 
 export interface AddTaskAction {
   type: typeof ADD_TASK;
-  payload: Task;
+  payload: Pick<Task, 'description'>;
 }
 
 interface DeleteTaskAction {
   type: typeof DELETE_TASK;
-  payload: {id: number};
+  payload: Pick<Task, 'id'>;
 }
 
 interface EditTaskAction {
@@ -23,7 +23,7 @@ interface EditTaskAction {
 
 interface ToggleDoneAction {
   type: typeof TOGGLE_DONE;
-  payload: {id: number};
+  payload: Pick<Task, 'id'>;
 }
 
 interface GetTaskAction {

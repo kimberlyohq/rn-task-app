@@ -15,8 +15,7 @@ export const InputBar = () => {
   const [task, setTask] = useState<string>('');
 
   const addTask = (description: string) => {
-    const newTask = {description, done: false};
-    dispatch({type: ADD_TASK, payload: newTask});
+    dispatch({type: ADD_TASK, payload: description});
     setTask('');
   };
 
