@@ -24,9 +24,9 @@ export const InputBar = () => {
       <TextInput
         style={styles.input}
         value={task}
+        placeholder="Add a new task"
         onChangeText={newTask => setTask(newTask)}
         onSubmitEditing={() => onSubmit(task)}
-        placeholder="Add a new todo"
       />
       <TouchableOpacity onPress={() => onSubmit(task)}>
         <View style={styles.addButtonWrapper}>
