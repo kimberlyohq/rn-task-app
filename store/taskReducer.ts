@@ -51,7 +51,7 @@ export const TaskReducer = (
           return task;
         }
 
-        const updatedTask = {...task, description: description};
+        const updatedTask = {...task, description};
         return updatedTask;
       });
 
