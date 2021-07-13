@@ -7,7 +7,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
-import {DELETE_TASK, EDIT_TASK, TOGGLE_DONE} from '../redux/actionTypes';
+import {deleteTask, editTask, toggleDone} from '../redux/actionCreators';
 
 export type TaskProps = {
   id: number;
@@ -21,16 +21,16 @@ export const Task = ({id, description, done}: TaskProps) => {
 
   const dispatch = useDispatch();
 
-  const deleteTask = () => {
-    dispatch({type: DELETE_TASK, payload: {id}});
+  const onDelete = () => {
+    dispatch(deleteTask(id));
   };
 
-  const toggleTask = () => {
-    dispatch({type: TOGGLE_DONE, payload: {id}});
+  const onToggle = () => {
+    dispatch(toggleDone(id));
   };
 
-  const editTask = () => {
-    dispatch({type: EDIT_TASK, payload: {id, description: taskDescription}});
+  const onEdit = () => {
+    dispatch(editTask(id, description));
   };
 
   const [taskDescription, setTaskDescription] = useState<string>(description);
@@ -47,7 +47,7 @@ export const Task = ({id, description, done}: TaskProps) => {
   return (
     <View style={[styles.container, completedTask]}>
       <View style={styles.leftItems}>
-        <TouchableOpacity style={styles.checkbox} onPress={toggleTask}>
+        <TouchableOpacity style={styles.checkbox} onPress={onToggle}>
           {done && <Text style={styles.check}>✓</Text>}
         </TouchableOpacity>
         <TextInput
@@ -68,7 +68,7 @@ export const Task = ({id, description, done}: TaskProps) => {
             if (textInputRef.current) {
               textInputRef.current.blur();
             }
-            editTask();
+            onEdit();
           }}
         />
       </View>
@@ -78,7 +78,7 @@ export const Task = ({id, description, done}: TaskProps) => {
           onPress={() => {
             if (textInputRef.current?.isFocused()) {
               textInputRef.current.blur();
-              editTask();
+              onEdit();
             } else {
               textInputRef.current?.focus();
             }
@@ -86,7 +86,7 @@ export const Task = ({id, description, done}: TaskProps) => {
           <Text>{editText}</Text>
         </TouchableOpacity>
         {!isFocused && (
-          <TouchableOpacity style={styles.deleteButton} onPress={deleteTask}>
+          <TouchableOpacity style={styles.deleteButton} onPress={onDelete}>
             <Text>删除</Text>
           </TouchableOpacity>
         )}

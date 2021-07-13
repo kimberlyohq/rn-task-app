@@ -7,15 +7,15 @@ import {
   StyleSheet,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
-import {ADD_TASK} from '../redux/actionTypes';
+import {addTask} from '../redux/actionCreators';
 
 export const InputBar = () => {
   const dispatch = useDispatch();
 
   const [task, setTask] = useState<string>('');
 
-  const addTask = (description: string) => {
-    dispatch({type: ADD_TASK, payload: description});
+  const onSubmit = (description: string) => {
+    dispatch(addTask(description));
     setTask('');
   };
 
@@ -25,10 +25,10 @@ export const InputBar = () => {
         style={styles.input}
         value={task}
         onChangeText={newTask => setTask(newTask)}
-        onSubmitEditing={() => addTask(task)}
+        onSubmitEditing={() => onSubmit(task)}
         placeholder="Add a new todo"
       />
-      <TouchableOpacity onPress={() => addTask(task)}>
+      <TouchableOpacity onPress={() => onSubmit(task)}>
         <View style={styles.addButtonWrapper}>
           <Text style={styles.addText}>+</Text>
         </View>
