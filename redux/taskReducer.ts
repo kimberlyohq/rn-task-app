@@ -31,18 +31,16 @@ export const TaskReducer = (
       return {...state, tasks: [newTask, ...state.tasks]};
     }
     case DELETE_TASK: {
-      const updatedTasks = state.tasks.filter(
-        task => task.id !== action.payload.id,
-      );
+      const {id} = action.payload;
+      const updatedTasks = state.tasks.filter(task => task.id !== id);
       return {
         ...state,
         tasks: updatedTasks,
       };
     }
     case EDIT_TASK: {
-      const editedTask = state.tasks.find(
-        task => task.id === action.payload.id,
-      );
+      const {id} = action.payload;
+      const editedTask = state.tasks.find(task => task.id === id);
 
       if (editedTask) {
         editedTask.description = action.payload.description;
@@ -56,9 +54,9 @@ export const TaskReducer = (
       };
     }
     case TOGGLE_DONE: {
-      const updatedTask = state.tasks.find(
-        task => task.id === action.payload.id,
-      );
+      const {id} = action.payload;
+
+      const updatedTask = state.tasks.find(task => task.id === id);
 
       if (updatedTask) {
         updatedTask.done = !updatedTask.done;
