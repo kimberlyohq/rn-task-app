@@ -44,11 +44,11 @@ export const TaskReducer = (
       };
     }
     case EDIT_TASK: {
-      const {id} = action.payload;
+      const {id, description} = action.payload;
       const editedTask = state.tasks.find(task => task.id === id);
 
       if (editedTask) {
-        editedTask.description = action.payload.description;
+        editedTask.description = description;
       }
 
       const updatedTasks = state.tasks.slice();
