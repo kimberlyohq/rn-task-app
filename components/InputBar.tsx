@@ -12,7 +12,7 @@ import {addTask} from '../store/actionCreators';
 export const InputBar = () => {
   const dispatch = useDispatch();
 
-  const [task, setTask] = useState<string>('');
+  const [task, setTask] = useState('');
 
   const onSubmit = (description: string) => {
     dispatch(addTask(description));
