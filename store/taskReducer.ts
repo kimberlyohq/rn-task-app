@@ -45,13 +45,15 @@ export const TaskReducer = (
     }
     case EDIT_TASK: {
       const {id, description} = action.payload;
-      const editedTask = state.tasks.find(task => task.id === id);
 
-      if (editedTask) {
-        editedTask.description = description;
-      }
+      const updatedTasks = state.tasks.map(task => {
+        if (task.id !== id) {
+          return task;
+        }
 
-      const updatedTasks = state.tasks.slice();
+        const updatedTask = {...task, description: description};
+        return updatedTask;
+      });
 
       return {
         ...state,
@@ -61,13 +63,14 @@ export const TaskReducer = (
     case TOGGLE_DONE: {
       const {id} = action.payload;
 
-      const updatedTask = state.tasks.find(task => task.id === id);
+      const updatedTasks = state.tasks.map(task => {
+        if (task.id !== id) {
+          return task;
+        }
 
-      if (updatedTask) {
-        updatedTask.done = !updatedTask.done;
-      }
-
-      const updatedTasks = state.tasks.slice();
+        const updatedTask = {...task, done: !task.done};
+        return updatedTask;
+      });
 
       return {
         ...state,
