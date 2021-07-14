@@ -2,10 +2,10 @@ import {Task} from './taskReducer';
 
 // action types
 export enum ActionTypes {
-  ADD_TASK,
-  DELETE_TASK,
-  EDIT_TASK,
-  TOGGLE_DONE,
+  ADD_TASK = 'tasks/add',
+  DELETE_TASK = 'tasks/delete',
+  EDIT_TASK = 'tasks/edit',
+  TOGGLE_DONE = 'tasks/toggle',
 }
 
 export interface AddTaskAction {
