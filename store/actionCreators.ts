@@ -1,8 +1,8 @@
 import {ADD_TASK, DELETE_TASK, EDIT_TASK, TOGGLE_DONE} from './actionTypes';
 
-export const addTask = (task: string) => ({
+export const addTask = (description: string) => ({
   type: ADD_TASK,
-  payload: {description: task},
+  payload: {description},
 });
 
 export const deleteTask = (id: number) => ({type: DELETE_TASK, payload: {id}});
