@@ -30,6 +30,9 @@ export const Task = ({id, description, done}: TaskProps) => {
   };
 
   const onEdit = () => {
+    if (taskDescription === description) {
+      return;
+    }
     dispatch(editTask(id, taskDescription));
   };
 
