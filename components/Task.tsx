@@ -16,7 +16,6 @@ export type TaskProps = {
 };
 
 export const Task = ({id, description, done}: TaskProps) => {
-  const [isFocused, setIsFocused] = useState(false);
   const [editText, setEditText] = useState('编辑');
 
   const dispatch = useDispatch();
@@ -33,7 +32,7 @@ export const Task = ({id, description, done}: TaskProps) => {
     dispatch(editTask(id, description));
   };
 
-  const [taskDescription, setTaskDescription] = useState<string>(description);
+  const [taskDescription, setTaskDescription] = useState(description);
 
   const textInputRef = useRef<TextInput>(null);
 
@@ -43,6 +42,18 @@ export const Task = ({id, description, done}: TaskProps) => {
     backgroundColor: done ? '#dcdcdc' : '#fff',
     opacity: done ? 0.5 : 1.0,
   };
+
+  const onFocus = () => {
+    textInputRef.current?.focus();
+    setEditText('完成');
+  };
+
+  const onBlur = () => {
+    textInputRef.current?.blur();
+    setEditText('编辑');
+  };
+
+  const isFocused = textInputRef.current?.isFocused();
 
   return (
     <View style={[styles.container, completedTask]}>
@@ -56,18 +67,10 @@ export const Task = ({id, description, done}: TaskProps) => {
           maxLength={100}
           value={taskDescription}
           onChangeText={setTaskDescription}
-          onFocus={() => {
-            setIsFocused(true);
-            setEditText('完成');
-          }}
-          onBlur={() => {
-            setIsFocused(false);
-            setEditText('编辑');
-          }}
+          onFocus={onFocus}
+          onBlur={onBlur}
           onSubmitEditing={() => {
-            if (textInputRef.current) {
-              textInputRef.current.blur();
-            }
+            onBlur();
             onEdit();
           }}
         />
@@ -76,11 +79,11 @@ export const Task = ({id, description, done}: TaskProps) => {
         <TouchableOpacity
           style={styles.editButton}
           onPress={() => {
-            if (textInputRef.current?.isFocused()) {
-              textInputRef.current.blur();
+            if (isFocused) {
+              onBlur();
               onEdit();
             } else {
-              textInputRef.current?.focus();
+              onFocus();
             }
           }}>
           <Text>{editText}</Text>
