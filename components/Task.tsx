@@ -17,6 +17,7 @@ export type TaskProps = {
 
 export const Task = ({id, description, done}: TaskProps) => {
   const [editText, setEditText] = useState('编辑');
+  const [taskDescription, setTaskDescription] = useState(description);
 
   const dispatch = useDispatch();
 
@@ -29,10 +30,8 @@ export const Task = ({id, description, done}: TaskProps) => {
   };
 
   const onEdit = () => {
-    dispatch(editTask(id, description));
+    dispatch(editTask(id, taskDescription));
   };
-
-  const [taskDescription, setTaskDescription] = useState(description);
 
   const textInputRef = useRef<TextInput>(null);
 
