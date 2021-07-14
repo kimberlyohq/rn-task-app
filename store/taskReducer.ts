@@ -2,7 +2,6 @@ import {
   ADD_TASK,
   DELETE_TASK,
   EDIT_TASK,
-  GET_TASKS,
   TaskActions,
   TOGGLE_DONE,
 } from './actionTypes';
@@ -76,9 +75,6 @@ export const TaskReducer = (
         ...state,
         tasks: updatedTasks,
       };
-    }
-    case GET_TASKS: {
-      return {...state};
     }
     default: {
       return state;
