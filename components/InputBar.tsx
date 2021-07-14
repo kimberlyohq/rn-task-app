@@ -15,13 +15,13 @@ export const InputBar = () => {
 
   const [task, setTask] = useState('');
 
-  const onSubmit = (description: string) => {
+  const onSubmit = () => {
     // Check whether the description is empty
-    if (description === '') {
+    if (task === '') {
       Alert.alert('🚨Empty Task', 'Task cannot be empty!');
       return;
     }
-    dispatch(addTask(description));
+    dispatch(addTask(task));
     setTask('');
   };
 
@@ -32,9 +32,9 @@ export const InputBar = () => {
         value={task}
         placeholder="Add a new task"
         onChangeText={newTask => setTask(newTask)}
-        onSubmitEditing={() => onSubmit(task)}
+        onSubmitEditing={onSubmit}
       />
-      <TouchableOpacity onPress={() => onSubmit(task)}>
+      <TouchableOpacity onPress={onSubmit}>
         <View style={styles.addButtonWrapper}>
           <Text style={styles.addText}>+</Text>
         </View>
