@@ -5,6 +5,7 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
+  Alert,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
 import {addTask} from '../store/actionCreators';
@@ -15,6 +16,11 @@ export const InputBar = () => {
   const [task, setTask] = useState('');
 
   const onSubmit = (description: string) => {
+    // Check whether the description is empty
+    if (description === '') {
+      Alert.alert('🚨Empty Task', 'Task cannot be empty!');
+      return;
+    }
     dispatch(addTask(description));
     setTask('');
   };
