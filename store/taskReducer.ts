@@ -1,10 +1,4 @@
-import {
-  ADD_TASK,
-  DELETE_TASK,
-  EDIT_TASK,
-  TaskActions,
-  TOGGLE_DONE,
-} from './actionTypes';
+import {ActionTypes, TaskActions} from './actionTypes';
 
 export type Task = {
   id: number;
@@ -25,7 +19,7 @@ export const TaskReducer = (
   action: TaskActions,
 ) => {
   switch (action.type) {
-    case ADD_TASK: {
+    case ActionTypes.ADD_TASK: {
       const {description} = action.payload;
       const newTask = {
         id: Math.random(),
@@ -34,7 +28,7 @@ export const TaskReducer = (
       };
       return {...state, tasks: [newTask, ...state.tasks]};
     }
-    case DELETE_TASK: {
+    case ActionTypes.DELETE_TASK: {
       const {id} = action.payload;
       const updatedTasks = state.tasks.filter(task => task.id !== id);
       return {
@@ -42,7 +36,7 @@ export const TaskReducer = (
         tasks: updatedTasks,
       };
     }
-    case EDIT_TASK: {
+    case ActionTypes.EDIT_TASK: {
       const {id, description} = action.payload;
 
       const updatedTasks = state.tasks.map(task => {
@@ -59,7 +53,7 @@ export const TaskReducer = (
         tasks: updatedTasks,
       };
     }
-    case TOGGLE_DONE: {
+    case ActionTypes.TOGGLE_DONE: {
       const {id} = action.payload;
 
       const updatedTasks = state.tasks.map(task => {

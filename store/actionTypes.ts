@@ -1,28 +1,30 @@
 import {Task} from './taskReducer';
 
 // action types
-export const ADD_TASK = 'ADD_TASK';
-export const DELETE_TASK = 'DELETE_TASK';
-export const EDIT_TASK = 'EDIT_TASK';
-export const TOGGLE_DONE = 'TOGGLE_DONE';
+export enum ActionTypes {
+  ADD_TASK,
+  DELETE_TASK,
+  EDIT_TASK,
+  TOGGLE_DONE,
+}
 
 export interface AddTaskAction {
-  type: typeof ADD_TASK;
+  type: ActionTypes.ADD_TASK;
   payload: Pick<Task, 'description'>;
 }
 
 interface DeleteTaskAction {
-  type: typeof DELETE_TASK;
+  type: ActionTypes.DELETE_TASK;
   payload: Pick<Task, 'id'>;
 }
 
 interface EditTaskAction {
-  type: typeof EDIT_TASK;
+  type: ActionTypes.EDIT_TASK;
   payload: Omit<Task, 'done'>;
 }
 
 interface ToggleDoneAction {
-  type: typeof TOGGLE_DONE;
+  type: ActionTypes.TOGGLE_DONE;
   payload: Pick<Task, 'id'>;
 }
 
